@@ -209,10 +209,12 @@ const NAV: NavConfig[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 function SimpleDropdown({ items }: { items: MenuItem[] }) {
+  const safeItems = items ?? [];
+  
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-52 rounded-xl border border-white/10 bg-[#0a0a0a] shadow-[0_16px_48px_rgba(0,0,0,0.6)] z-50 overflow-hidden">
       <div className="py-1.5">
-        {items.map((item) => (
+        {safeItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
@@ -246,24 +248,25 @@ function MegaMenuPanel({
   onClose: () => void;
 }) {
   // Collect every previewable item (those with description)
-  const allPreviewItems = config.groups
-    .flatMap((g) => g.items)
-    .filter((i) => i.description);
+  const allPreviewItems = (config.groups ?? [])
+    .flatMap((g) => g.items ?? [])
+    .filter((i) => i?.description);
 
   const [hoveredItem, setHoveredItem] = useState<MenuItem | null>(
     allPreviewItems[0] ?? null
   );
 
+  const groups = config.groups ?? [];
   const colCount = config.withPreview
-    ? config.groups.length + 1  // extra preview column
-    : config.groups.length;
+    ? groups.length + 1  // extra preview column
+    : groups.length;
 
   // Grid template: equal columns for groups + fixed preview column
   const gridStyle: React.CSSProperties = config.withPreview
     ? {
-        gridTemplateColumns: `repeat(${config.groups.length}, 1fr) 220px`,
+        gridTemplateColumns: `repeat(${groups.length}, 1fr) 220px`,
       }
-    : { gridTemplateColumns: `repeat(${config.groups.length}, 1fr)` };
+    : { gridTemplateColumns: `repeat(${groups.length}, 1fr)` };
 
   return (
     <div
@@ -278,7 +281,7 @@ function MegaMenuPanel({
     >
       <div className="grid" style={gridStyle}>
         {/* ── Groups ─────────────────────────────────────────────────── */}
-        {config.groups.map((group, gi) => (
+        {groups.map((group, gi) => (
           <div
             key={group.heading}
             className={`py-5 px-5 ${gi > 0 ? "border-l border-white/[0.06]" : ""}`}
@@ -304,7 +307,7 @@ function MegaMenuPanel({
 
             {/* Items */}
             <ul className="space-y-0.5">
-              {group.items.map((item) => {
+              {(group.items ?? []).map((item) => {
                 const isActive = hoveredItem?.label === item.label;
                 return (
                   <li key={item.href + item.label}>
@@ -430,8 +433,11 @@ function MegaMenuPanel({
 
 function SolutionsMegaMenu({ onClose }: { onClose: () => void }) {
   // Default to the first solution (HR) so the panel is never empty on open
-  const [activeSolId, setActiveSolId] = useState<string>(SOLUTION_NAV[0].id);
-  const activeSol = SOLUTION_NAV.find((s) => s.id === activeSolId) ?? SOLUTION_NAV[0];
+  const safeSolutionNav = SOLUTION_NAV ?? [];
+  const [activeSolId, setActiveSolId] = useState<string>(safeSolutionNav[0]?.id ?? "");
+  const activeSol = safeSolutionNav.find((s) => s.id === activeSolId) ?? safeSolutionNav[0];
+
+  if (!activeSol) return null;
 
   return (
     <div
@@ -452,7 +458,7 @@ function SolutionsMegaMenu({ onClose }: { onClose: () => void }) {
             Solutions
           </Link>
           <ul className="space-y-0.5">
-            {SOLUTION_NAV.map((sol) => {
+            {safeSolutionNav.map((sol) => {
               const isActive = activeSolId === sol.id;
               return (
                 <li key={sol.id}>
@@ -490,7 +496,7 @@ function SolutionsMegaMenu({ onClose }: { onClose: () => void }) {
             {activeSol.label} workflows
           </Link>
           <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
-            {activeSol.subprocesses.map((sub) => (
+            {(activeSol.subprocesses ?? []).map((sub) => (
               <li key={sub.id}>
                 <Link
                   href={sub.href}
@@ -527,7 +533,7 @@ function SolutionsMegaMenu({ onClose }: { onClose: () => void }) {
             Platform
           </p>
           <ul className="space-y-0.5">
-            {platformCapabilities.map((item) => (
+            {(platformCapabilities ?? []).map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -663,9 +669,11 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
   if (!open) return null;
 
   /** Flatten all items from a menu config */
-  function flatItems(menu: MegaMenuConfig | SimpleMenuConfig): Array<{ item: MenuItem; groupLabel: string }> {
-    if (menu.kind === "simple") return menu.items.map((item) => ({ item, groupLabel: "" }));
-    return menu.groups.flatMap((g) => g.items.map((item) => ({ item, groupLabel: g.heading })));
+  function flatItems(menu: MegaMenuConfig | SimpleMenuConfig | null): Array<{ item: MenuItem; groupLabel: string }> {
+    if (!menu) return [];
+    if (menu.kind === "simple") return (menu.items ?? []).map((item) => ({ item, groupLabel: "" }));
+    if (menu.kind === "mega") return (menu.groups ?? []).flatMap((g) => (g.items ?? []).map((item) => ({ item, groupLabel: g.heading })));
+    return [];
   }
 
   /** Deduplicate items by href */
@@ -733,7 +741,7 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
                   {/* Grouped items */}
                   {(nav.menu as { kind: string })?.kind === "solutions"
                     ? <>
-                        {SOLUTION_NAV.map((sol) => (
+                        {(SOLUTION_NAV ?? []).map((sol) => (
                           <div key={sol.id}>
                             <Link
                               href={sol.href}
@@ -743,7 +751,7 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
                             >
                               {sol.label} →
                             </Link>
-                            {sol.subprocesses.map((sub) => (
+                            {(sol.subprocesses ?? []).map((sub) => (
                               <Link
                                 key={sub.id}
                                 href={sub.href}
@@ -771,7 +779,7 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
                         </div>
                       </>
                     : nav.menu?.kind === "mega"
-                    ? nav.menu.groups.map((group) => (
+                    ? ((nav.menu as MegaMenuConfig).groups ?? []).map((group) => (
                         <div key={group.heading}>
                           <p
                             className="px-4 pt-3 pb-1 text-[9px] font-semibold uppercase tracking-[0.18em]"
@@ -779,7 +787,7 @@ function MobileMenu({ open, onClose, dark, onToggleTheme }: { open: boolean; onC
                           >
                             {group.heading}
                           </p>
-                          {group.items.map((item) => (
+                          {(group.items ?? []).map((item) => (
                             <Link
                               key={item.href + item.label}
                               href={item.href}
