@@ -48,8 +48,16 @@ export default function ChatbotShell({
   const solution = getSolution(selectedSolution);
 
   function selectSolution(solutionId: SolutionId, contextId: string | null = null) {
-    if (isPreview && contextId === "talent-acquisition") {
-      router.push("/assistant?context=talent-acquisition");
+    if (isPreview) {
+      const resolvedContext =
+        contextId ??
+        (solutionId === "support" ? "customer-support" : solutionId === "sales" ? "sales" : solutionId === "it" ? "it" : null);
+
+      if (resolvedContext) {
+        router.push(`/assistant?context=${resolvedContext}`);
+      } else {
+        router.push("/assistant");
+      }
       return;
     }
 
