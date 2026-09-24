@@ -128,12 +128,10 @@ export default function AIAssistantShowcase() {
           </div>
         </div>
         <div id="ai-assistant-chat" className="min-w-0 border-t border-white/12 bg-[#080808] p-3 lg:border-l lg:border-t-0 scroll-mt-20 flex flex-col items-stretch">
-          {/* Chatbot */}
           <div className="w-full">
-            <ChatbotShell compact light />
+            <ChatbotShell compact light mode="preview" />
           </div>
 
-          {/* Description + Explore button — compact row directly below chatbot */}
           <div className="mt-3 mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-[13px] leading-[1.65] text-white sm:max-w-[58%]">
               Connect your business tools and let SoloBuildAI retrieve information, execute workflows,

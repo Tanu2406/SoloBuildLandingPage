@@ -1,4 +1,4 @@
-export type SolutionId = "hr" | "sales" | "support" | "it" | "operations";
+export type SolutionId = "hr" | "talent-acquisition" | "sales" | "support" | "it" | "operations";
 
 export type ChatRole = "user" | "assistant";
 
@@ -21,6 +21,22 @@ export type SolutionContext = {
   starter: string;
   response: string;
   summary: string[];
+};
+
+export type ChatbotMenuItem = {
+  id: string;
+  name: string;
+  href?: string;
+  external?: boolean;
+  isComingSoon?: boolean;
+};
+
+export type ChatbotContextConfig = {
+  id: string;
+  groupId: SolutionId;
+  name: string;
+  landingHref: string;
+  menuItems: ChatbotMenuItem[];
 };
 
 export type RecentChat = {

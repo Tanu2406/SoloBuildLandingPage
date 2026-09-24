@@ -1,4 +1,100 @@
-import { ChatMessage, ConnectedTool, RecentChat, SolutionContext, SolutionId } from "./types";
+import { ChatMessage, ChatbotContextConfig, ConnectedTool, RecentChat, SolutionContext, SolutionId } from "./types";
+
+export const CHATBOT_CONTEXTS: Record<string, ChatbotContextConfig> = {
+  "talent-acquisition": {
+    id: "talent-acquisition",
+    groupId: "hr",
+    name: "Talent Acquisition",
+    landingHref: "/solutions/hr/talent-acquisition",
+    menuItems: [
+      { id: "hiring", name: "Hiring", href: "http://localhost:5173/", external: true },
+      { id: "candidates", name: "Candidates", href: "http://localhost:5173/candidates", external: true },
+      { id: "screening-reports", name: "Screening Reports", href: "http://localhost:5173/screening-reports", external: true },
+      { id: "ai-recruiters", name: "AI Recruiters", href: "http://localhost:5173/recruiters", external: true },
+      { id: "interviews", name: "Interviews", href: "http://localhost:5173/interviews", external: true },
+      { id: "activity", name: "Activity", href: "http://localhost:5173/activity", external: true },
+    ],
+  },
+  "employee-onboarding": {
+    id: "employee-onboarding",
+    groupId: "hr",
+    name: "Employee Onboarding",
+    landingHref: "/solutions/hr/employee-onboarding",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  "learning-development": {
+    id: "learning-development",
+    groupId: "hr",
+    name: "Learning & Development",
+    landingHref: "/solutions/hr/learning-development",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  "performance-reviews": {
+    id: "performance-reviews",
+    groupId: "hr",
+    name: "Performance & Reviews",
+    landingHref: "/solutions/hr/performance-reviews",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  "payroll-benefits": {
+    id: "payroll-benefits",
+    groupId: "hr",
+    name: "Payroll & Benefits",
+    landingHref: "/solutions/hr/payroll-benefits",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  "employee-support": {
+    id: "employee-support",
+    groupId: "hr",
+    name: "Employee Support",
+    landingHref: "/solutions/hr/employee-support",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  "offboarding": {
+    id: "offboarding",
+    groupId: "hr",
+    name: "Offboarding",
+    landingHref: "/solutions/hr/offboarding",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  sales: {
+    id: "sales",
+    groupId: "sales",
+    name: "Sales",
+    landingHref: "/solutions/sales",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  "customer-support": {
+    id: "customer-support",
+    groupId: "support",
+    name: "Customer Support",
+    landingHref: "/solutions/customer-support",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+  it: {
+    id: "it",
+    groupId: "it",
+    name: "IT Solutions",
+    landingHref: "/solutions/it",
+    menuItems: [{ id: "coming-soon", name: "Coming Soon", isComingSoon: true }],
+  },
+};
+
+export function getChatbotContext(contextId: string | null | undefined) {
+  if (!contextId) return null;
+  return CHATBOT_CONTEXTS[contextId] ?? null;
+}
+
+export function getChatbotContextFromPath(pathname: string | null | undefined) {
+  if (!pathname) return null;
+
+  return (
+    Object.values(CHATBOT_CONTEXTS).find((context) => {
+      const landingHref = context.landingHref;
+      return pathname === landingHref || pathname.startsWith(`${landingHref}/`);
+    }) ?? null
+  );
+}
 
 export const SOLUTIONS: SolutionContext[] = [
   {
@@ -71,7 +167,20 @@ export const RECENT_CHATS: RecentChat[] = [
   { id: "team-report", title: "Team performance report", solutionId: "operations", time: "1d ago", message: "What needs my attention in operations?" },
 ];
 
+export const TALENT_ACQUISITION_RECENT_CHATS: RecentChat[] = [
+  { id: "ta-candidate-screening", title: "Candidate screening help", solutionId: "hr", time: "2m ago", message: "Review candidates and summarize screening flags" },
+  { id: "ta-hiring-pipeline", title: "Hiring pipeline update", solutionId: "hr", time: "18m ago", message: "Check hiring status across active roles" },
+  { id: "ta-interview-scheduling", title: "Interview scheduling", solutionId: "hr", time: "42m ago", message: "Coordinate interviews and follow-ups" },
+  { id: "ta-resume-review", title: "Resume review", solutionId: "hr", time: "1h ago", message: "Summarize candidate strengths and risks" },
+];
+
+export function getContextualRecentChats(contextId: string | null | undefined): RecentChat[] {
+  if (contextId === "talent-acquisition") return TALENT_ACQUISITION_RECENT_CHATS;
+  return RECENT_CHATS.filter((chat) => chat.solutionId === "hr");
+}
+
 export function getSolution(solutionId: SolutionId) {
+  if (solutionId === "talent-acquisition") return SOLUTIONS[0];
   return SOLUTIONS.find((solution) => solution.id === solutionId) ?? SOLUTIONS[0];
 }
 

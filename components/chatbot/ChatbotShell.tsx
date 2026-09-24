@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import ChatHeader from "./ChatHeader";
 import ChatSidebar from "./ChatSidebar";
 import ChatWindow from "./ChatWindow";
@@ -12,24 +13,58 @@ export default function ChatbotShell({
   compact = false,
   light = false,
   fullHeight = false,
+  mode = "full",
 }: {
   compact?: boolean;
   light?: boolean;
   fullHeight?: boolean;
+  mode?: "preview" | "full";
 }) {
-  const [selectedSolution, setSelectedSolution] = useState<SolutionId>("hr");
-  const [selectedChat, setSelectedChat] = useState<string | null>("hr-tasks");
+  const isPreview = mode === "preview";
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const contextParam = searchParams.get("context");
+  const initialTalentContext = contextParam === "talent-acquisition";
+  const [selectedSolution, setSelectedSolution] = useState<SolutionId>(initialTalentContext ? "talent-acquisition" : "hr");
+  const [selectedContextId, setSelectedContextId] = useState<string | null>(initialTalentContext ? "talent-acquisition" : null);
+
+  useEffect(() => {
+    if (isPreview) return;
+
+    const target = selectedContextId ? `/assistant?context=${selectedContextId}` : "/assistant";
+    const current = `${window.location.pathname}${window.location.search}`;
+
+    if (current !== target) {
+      router.replace(target, { scroll: false });
+    }
+  }, [selectedContextId, isPreview, router]);
+  const [selectedChat, setSelectedChat] = useState<string | null>(initialTalentContext ? null : "hr-tasks");
   const [messages, setMessages] = useState<ChatMessage[]>(() =>
-    createConversation(getSolution("hr"))
+    createConversation(getSolution(initialTalentContext ? "talent-acquisition" : "hr"))
   );
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const solution = getSolution(selectedSolution);
 
-  function selectSolution(solutionId: SolutionId) {
+  function selectSolution(solutionId: SolutionId, contextId: string | null = null) {
+    if (isPreview && contextId === "talent-acquisition") {
+      router.push("/assistant?context=talent-acquisition");
+      return;
+    }
+
     setSelectedSolution(solutionId);
+    setSelectedContextId(contextId);
     setSelectedChat(null);
     setMessages(createConversation(getSolution(solutionId)));
+    setSidebarOpen(false);
+  }
+
+  function resetContext() {
+    setSelectedContextId(null);
+    setSelectedSolution("hr");
+    setSelectedChat(null);
+    setMessages(createConversation(getSolution("hr")));
     setSidebarOpen(false);
   }
 
@@ -37,6 +72,7 @@ export default function ChatbotShell({
     const chat = RECENT_CHATS.find((item) => item.id === chatId);
     if (!chat) return;
     setSelectedSolution(chat.solutionId);
+    setSelectedContextId(null);
     setSelectedChat(chat.id);
     setMessages(createConversation(getSolution(chat.solutionId)));
     setSidebarOpen(false);
@@ -44,7 +80,13 @@ export default function ChatbotShell({
 
   function newChat() {
     setSelectedChat(null);
-    setMessages([]);
+    if (selectedContextId) {
+      const activeContext = selectedContextId;
+      setSelectedSolution(activeContext === "talent-acquisition" ? "talent-acquisition" : "hr");
+      setMessages(createConversation(getSolution(activeContext === "talent-acquisition" ? "talent-acquisition" : "hr")));
+    } else {
+      setMessages([]);
+    }
     setSidebarOpen(false);
   }
 
@@ -81,11 +123,11 @@ export default function ChatbotShell({
 
   return (
     <div
-      className={`relative flex min-h-0 overflow-hidden border ${shellBorder} ${shellBg} text-white ${
+      className={`relative flex overflow-hidden border ${shellBorder} ${shellBg} text-white ${
         compact
           ? "h-[600px] rounded-2xl shadow-[0_4px_32px_rgba(0,0,0,0.22),0_0_0_1px_rgba(0,0,0,0.04)]"
           : fullHeight
-          ? "h-full"
+          ? "h-[calc(100vh-58px)] w-screen min-w-0 rounded-none border-0 shadow-none"
           : "min-h-[calc(100vh-58px)]"
       }`}
     >
@@ -102,12 +144,15 @@ export default function ChatbotShell({
       <div
         className={`${
           sidebarOpen ? "fixed inset-y-0 left-0 z-40 flex" : "hidden"
-        } w-[200px] lg:static lg:flex`}
+        } h-full min-h-0 w-[220px] overflow-hidden lg:static lg:flex`}
       >
         <ChatSidebar
           selectedSolution={selectedSolution}
+          selectedContextId={selectedContextId}
           selectedChat={selectedChat}
           onSelectSolution={selectSolution}
+          onSelectContext={selectSolution}
+          onResetContext={resetContext}
           onSelectChat={selectChat}
           onNewChat={newChat}
           onClose={() => setSidebarOpen(false)}
