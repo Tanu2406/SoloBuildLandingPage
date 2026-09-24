@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import ChatbotShell from "@/components/chatbot/ChatbotShell";
 
@@ -129,7 +130,9 @@ export default function AIAssistantShowcase() {
         </div>
         <div id="ai-assistant-chat" className="min-w-0 border-t border-white/12 bg-[#080808] p-3 lg:border-l lg:border-t-0 scroll-mt-20 flex flex-col items-stretch">
           <div className="w-full">
-            <ChatbotShell compact light mode="preview" />
+            <Suspense fallback={<div className="h-[600px] w-full rounded-2xl bg-[#080808]" />}>
+              <ChatbotShell compact light mode="preview" />
+            </Suspense>
           </div>
 
           <div className="mt-3 mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

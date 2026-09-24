@@ -1,4 +1,4 @@
-import { ChatMessage, ChatbotContextConfig, ConnectedTool, RecentChat, SolutionContext, SolutionId } from "./types";
+﻿import { ChatMessage, ChatbotContextConfig, ConnectedTool, RecentChat, SolutionContext, SolutionId } from "./types";
 
 export const CHATBOT_CONTEXTS: Record<string, ChatbotContextConfig> = {
   "talent-acquisition": {
@@ -7,12 +7,12 @@ export const CHATBOT_CONTEXTS: Record<string, ChatbotContextConfig> = {
     name: "Talent Acquisition",
     landingHref: "/solutions/hr/talent-acquisition",
     menuItems: [
-      { id: "hiring", name: "Hiring", href: "http://localhost:5173/", external: true },
-      { id: "candidates", name: "Candidates", href: "http://localhost:5173/candidates", external: true },
-      { id: "screening-reports", name: "Screening Reports", href: "http://localhost:5173/screening-reports", external: true },
-      { id: "ai-recruiters", name: "AI Recruiters", href: "http://localhost:5173/recruiters", external: true },
-      { id: "interviews", name: "Interviews", href: "http://localhost:5173/interviews", external: true },
-      { id: "activity", name: "Activity", href: "http://localhost:5173/activity", external: true },
+      { id: "hiring", name: "Hiring", href: "https://solobuildai.vercel.app/", external: true },
+      { id: "candidates", name: "Candidates", href: "https://solobuildai.vercel.app/candidates", external: true },
+      { id: "screening-reports", name: "Screening Reports", href: "https://solobuildai.vercel.app/screening-reports", external: true },
+      { id: "ai-recruiters", name: "AI Recruiters", href: "https://solobuildai.vercel.app/recruiters", external: true },
+      { id: "interviews", name: "Interviews", href: "https://solobuildai.vercel.app/interviews", external: true },
+      { id: "activity", name: "Activity", href: "https://solobuildai.vercel.app/activity", external: true },
     ],
   },
   "employee-onboarding": {
@@ -200,3 +200,4 @@ export function createConversation(solution: SolutionContext): ChatMessage[] {
     },
   ];
 }
+
