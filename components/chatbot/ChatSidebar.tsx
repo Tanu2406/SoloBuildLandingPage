@@ -176,7 +176,7 @@ export default function ChatSidebar({
                   }`}>
                     {contextualSelection.id === "talent-acquisition"
                       ? "HR Solutions / Talent Acquisition"
-                      : `${contextualSelection.groupId === "hr" ? "HR Solutions" : contextualSelection.name} / ${contextualSelection.name}`}
+                      : `${contextualSelection.groupId === "hr" ? "HR Solutions" : contextualSelection.groupId === "sales" ? "Sales" : contextualSelection.groupId === "support" ? "Customer Support" : contextualSelection.groupId === "it" ? "IT Solutions" : contextualSelection.name} / ${contextualSelection.name}`}
                   </div>
 
                   {contextualSelection.menuItems.length === 0 ? (
@@ -260,14 +260,20 @@ export default function ChatSidebar({
                           {group.items.map((item) => {
                             const itemActive = pathname === item.href;
 
-                            if (group.id === "hr" || item.id === "talent-acquisition") {
+                            if (group.id === "hr" || group.id === "sales" || group.id === "support" || group.id === "it" || item.id === "talent-acquisition") {
                               return (
                                 <button
                                   key={item.id}
                                   type="button"
                                   onClick={() => {
-                                    const contextId = item.id;
-                                    onSelectContext?.(group.id, contextId);
+                                    const contextId = group.id === "support" && item.id === "support-workflow"
+                                      ? "ticket-management"
+                                      : item.id;
+                                    if (onSelectContext) {
+                                      onSelectContext(group.id, contextId);
+                                    } else {
+                                      onSelectSolution(group.id, contextId);
+                                    }
                                     onClose?.();
                                   }}
                                   className={`block w-full rounded-md px-2.5 py-1.5 text-left text-[12px] leading-5 transition-colors ${
@@ -283,37 +289,7 @@ export default function ChatSidebar({
                               );
                             }
 
-                            return (
-                              <Link
-                                key={item.id}
-                                href={item.href}
-                                onClick={() => {
-                                  const contextId = group.id === "sales"
-                                    ? "sales"
-                                    : group.id === "support"
-                                      ? "customer-support"
-                                      : group.id === "it"
-                                        ? "it"
-                                        : item.id;
-
-                                  if (onSelectContext) {
-                                    onSelectContext(group.id, contextId);
-                                  } else {
-                                    onSelectSolution(group.id, contextId);
-                                  }
-                                  onClose?.();
-                                }}
-                                className={`block rounded-md px-2.5 py-1.5 text-[12px] leading-5 transition-colors ${
-                                  itemActive
-                                    ? "border border-[#0066FF]/20 bg-[#0066FF]/10 font-medium text-[#0066FF]"
-                                    : light
-                                      ? "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
-                                      : "text-slate-400 hover:bg-white/[0.03] hover:text-white"
-                                }`}
-                              >
-                                {item.name}
-                              </Link>
-                            );
+                            return null;
                           })}
                         </div>
                       </div>

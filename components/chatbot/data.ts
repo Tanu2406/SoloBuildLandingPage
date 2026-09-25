@@ -99,6 +99,217 @@ export const CHATBOT_CONTEXTS: Record<string, ChatbotContextConfig> = {
       { id: "activity", name: "Activity", href: "/solutions/hr/offboarding" },
     ],
   },
+  "lead-management": {
+    id: "lead-management",
+    groupId: "sales",
+    name: "Lead Management",
+    landingHref: "/solutions/sales/lead-management",
+    menuItems: [
+      { id: "lead-research", name: "Lead Research", href: "/coming-soon/lead-management/lead-research" },
+      { id: "lead-enrichment", name: "Lead Enrichment", href: "/coming-soon/lead-management/lead-enrichment" },
+      { id: "lead-qualification", name: "Lead Qualification", href: "/coming-soon/lead-management/lead-qualification" },
+      { id: "lead-scoring", name: "Lead Scoring", href: "/coming-soon/lead-management/lead-scoring" },
+      { id: "lead-assignment", name: "Lead Assignment", href: "/coming-soon/lead-management/lead-assignment" },
+      { id: "activity", name: "Activity", href: "/coming-soon/lead-management/activity" },
+    ],
+  },
+  "lead-qualification": {
+    id: "lead-qualification",
+    groupId: "sales",
+    name: "Lead Qualification",
+    landingHref: "/solutions/sales/lead-qualification",
+    menuItems: [
+      { id: "lead-research", name: "Lead Research", href: "/coming-soon/lead-qualification/lead-research" },
+      { id: "qualification-criteria", name: "Qualification Criteria", href: "/coming-soon/lead-qualification/qualification-criteria" },
+      { id: "lead-scoring", name: "Lead Scoring", href: "/coming-soon/lead-qualification/lead-scoring" },
+      { id: "intent-detection", name: "Intent Detection", href: "/coming-soon/lead-qualification/intent-detection" },
+      { id: "qualification-results", name: "Qualification Results", href: "/coming-soon/lead-qualification/qualification-results" },
+      { id: "activity", name: "Activity", href: "/coming-soon/lead-qualification/activity" },
+    ],
+  },
+  "sales-outreach": {
+    id: "sales-outreach",
+    groupId: "sales",
+    name: "Sales Outreach",
+    landingHref: "/solutions/sales/sales-outreach",
+    menuItems: [
+      { id: "lead-research", name: "Lead Research", href: "/coming-soon/sales-outreach/lead-research" },
+      { id: "personalized-outreach", name: "Personalized Outreach", href: "/coming-soon/sales-outreach/personalized-outreach" },
+      { id: "email-campaigns", name: "Email Campaigns", href: "/coming-soon/sales-outreach/email-campaigns" },
+      { id: "follow-ups", name: "Follow-ups", href: "/coming-soon/sales-outreach/follow-ups" },
+      { id: "meeting-booking", name: "Meeting Booking", href: "/coming-soon/sales-outreach/meeting-booking" },
+      { id: "activity", name: "Activity", href: "/coming-soon/sales-outreach/activity" },
+    ],
+  },
+  "meeting-scheduling": {
+    id: "meeting-scheduling",
+    groupId: "sales",
+    name: "Meeting & Scheduling",
+    landingHref: "/solutions/sales/meeting-scheduling",
+    menuItems: [
+      { id: "meeting-requests", name: "Meeting Requests", href: "/coming-soon/meeting-scheduling/meeting-requests" },
+      { id: "availability", name: "Availability", href: "/coming-soon/meeting-scheduling/availability" },
+      { id: "scheduling", name: "Scheduling", href: "/coming-soon/meeting-scheduling/scheduling" },
+      { id: "rescheduling", name: "Rescheduling", href: "/coming-soon/meeting-scheduling/rescheduling" },
+      { id: "reminders", name: "Reminders", href: "/coming-soon/meeting-scheduling/reminders" },
+      { id: "activity", name: "Activity", href: "/coming-soon/meeting-scheduling/activity" },
+    ],
+  },
+  "opportunity-management": {
+    id: "opportunity-management",
+    groupId: "sales",
+    name: "Opportunity Management",
+    landingHref: "/solutions/sales/opportunity-management",
+    menuItems: [
+      { id: "opportunity-tracking", name: "Opportunity Tracking", href: "/coming-soon/opportunity-management/opportunity-tracking" },
+      { id: "deal-qualification", name: "Deal Qualification", href: "/coming-soon/opportunity-management/deal-qualification" },
+      { id: "pipeline-management", name: "Pipeline Management", href: "/coming-soon/opportunity-management/pipeline-management" },
+      { id: "deal-updates", name: "Deal Updates", href: "/coming-soon/opportunity-management/deal-updates" },
+      { id: "follow-ups", name: "Follow-ups", href: "/coming-soon/opportunity-management/follow-ups" },
+      { id: "activity", name: "Activity", href: "/coming-soon/opportunity-management/activity" },
+    ],
+  },
+  "sales-analytics": {
+    id: "sales-analytics",
+    groupId: "sales",
+    name: "Sales Analytics",
+    landingHref: "/solutions/sales/sales-analytics",
+    menuItems: [
+      { id: "sales-dashboard", name: "Sales Dashboard", href: "/coming-soon/sales-analytics/sales-dashboard" },
+      { id: "pipeline-analytics", name: "Pipeline Analytics", href: "/coming-soon/sales-analytics/pipeline-analytics" },
+      { id: "conversion-analytics", name: "Conversion Analytics", href: "/coming-soon/sales-analytics/conversion-analytics" },
+      { id: "revenue-insights", name: "Revenue Insights", href: "/coming-soon/sales-analytics/revenue-insights" },
+      { id: "forecasting", name: "Forecasting", href: "/coming-soon/sales-analytics/forecasting" },
+      { id: "activity", name: "Activity", href: "/coming-soon/sales-analytics/activity" },
+    ],
+  },
+  "ticket-management": {
+    id: "ticket-management",
+    groupId: "support",
+    name: "Ticket Management",
+    landingHref: "/solutions/customer-support/support-workflow",
+    menuItems: [
+      { id: "ticket-creation", name: "Ticket Creation", href: "/coming-soon/ticket-management/ticket-creation" },
+      { id: "ticket-classification", name: "Ticket Classification", href: "/coming-soon/ticket-management/ticket-classification" },
+      { id: "priority-routing", name: "Priority & Routing", href: "/coming-soon/ticket-management/priority-routing" },
+      { id: "ticket-assignment", name: "Ticket Assignment", href: "/coming-soon/ticket-management/ticket-assignment" },
+      { id: "sla-management", name: "SLA Management", href: "/coming-soon/ticket-management/sla-management" },
+      { id: "resolution-tracking", name: "Resolution Tracking", href: "/coming-soon/ticket-management/resolution-tracking" },
+      { id: "activity", name: "Activity", href: "/coming-soon/ticket-management/activity" },
+    ],
+  },
+  "agent-assist": {
+    id: "agent-assist",
+    groupId: "support",
+    name: "Agent Assist",
+    landingHref: "/solutions/customer-support/agent-assist",
+    menuItems: [
+      { id: "ticket-context", name: "Ticket Context", href: "/coming-soon/agent-assist/ticket-context" },
+      { id: "suggested-responses", name: "Suggested Responses", href: "/coming-soon/agent-assist/suggested-responses" },
+      { id: "customer-information", name: "Customer Information", href: "/coming-soon/agent-assist/customer-information" },
+      { id: "next-best-action", name: "Next Best Action", href: "/coming-soon/agent-assist/next-best-action" },
+      { id: "agent-guidance", name: "Agent Guidance", href: "/coming-soon/agent-assist/agent-guidance" },
+      { id: "activity", name: "Activity", href: "/coming-soon/agent-assist/activity" },
+    ],
+  },
+  "knowledge-resolution": {
+    id: "knowledge-resolution",
+    groupId: "support",
+    name: "Knowledge & Resolution",
+    landingHref: "/solutions/customer-support/knowledge-resolution",
+    menuItems: [
+      { id: "knowledge-search", name: "Knowledge Search", href: "/coming-soon/knowledge-resolution/knowledge-search" },
+      { id: "answer-generation", name: "Answer Generation", href: "/coming-soon/knowledge-resolution/answer-generation" },
+      { id: "resolution-suggestions", name: "Resolution Suggestions", href: "/coming-soon/knowledge-resolution/resolution-suggestions" },
+      { id: "article-recommendations", name: "Article Recommendations", href: "/coming-soon/knowledge-resolution/article-recommendations" },
+      { id: "case-resolution", name: "Case Resolution", href: "/coming-soon/knowledge-resolution/case-resolution" },
+      { id: "activity", name: "Activity", href: "/coming-soon/knowledge-resolution/activity" },
+    ],
+  },
+  escalation: {
+    id: "escalation",
+    groupId: "support",
+    name: "Escalation",
+    landingHref: "/solutions/customer-support/escalation",
+    menuItems: [
+      { id: "escalation-detection", name: "Escalation Detection", href: "/coming-soon/escalation/escalation-detection" },
+      { id: "priority-management", name: "Priority Management", href: "/coming-soon/escalation/priority-management" },
+      { id: "human-handoff", name: "Human Handoff", href: "/coming-soon/escalation/human-handoff" },
+      { id: "case-routing", name: "Case Routing", href: "/coming-soon/escalation/case-routing" },
+      { id: "escalation-tracking", name: "Escalation Tracking", href: "/coming-soon/escalation/escalation-tracking" },
+      { id: "activity", name: "Activity", href: "/coming-soon/escalation/activity" },
+    ],
+  },
+  "customer-communication": {
+    id: "customer-communication",
+    groupId: "support",
+    name: "Customer Communication",
+    landingHref: "/solutions/customer-support/customer-communication",
+    menuItems: [
+      { id: "email-responses", name: "Email Responses", href: "/coming-soon/customer-communication/email-responses" },
+      { id: "chat-responses", name: "Chat Responses", href: "/coming-soon/customer-communication/chat-responses" },
+      { id: "customer-updates", name: "Customer Updates", href: "/coming-soon/customer-communication/customer-updates" },
+      { id: "notifications", name: "Notifications", href: "/coming-soon/customer-communication/notifications" },
+      { id: "follow-ups", name: "Follow-ups", href: "/coming-soon/customer-communication/follow-ups" },
+      { id: "activity", name: "Activity", href: "/coming-soon/customer-communication/activity" },
+    ],
+  },
+  "support-analytics": {
+    id: "support-analytics",
+    groupId: "support",
+    name: "Support Analytics",
+    landingHref: "/solutions/customer-support/support-analytics",
+    menuItems: [
+      { id: "support-dashboard", name: "Support Dashboard", href: "/coming-soon/support-analytics/support-dashboard" },
+      { id: "ticket-analytics", name: "Ticket Analytics", href: "/coming-soon/support-analytics/ticket-analytics" },
+      { id: "resolution-analytics", name: "Resolution Analytics", href: "/coming-soon/support-analytics/resolution-analytics" },
+      { id: "response-time", name: "Response Time", href: "/coming-soon/support-analytics/response-time" },
+      { id: "customer-insights", name: "Customer Insights", href: "/coming-soon/support-analytics/customer-insights" },
+      { id: "activity", name: "Activity", href: "/coming-soon/support-analytics/activity" },
+    ],
+  },
+  "it-support": {
+    id: "it-support",
+    groupId: "it",
+    name: "IT Support",
+    landingHref: "/solutions/it/it-support",
+    menuItems: [
+      { id: "it-requests", name: "IT Requests", href: "/coming-soon/it-support/it-requests" },
+      { id: "incident-management", name: "Incident Management", href: "/coming-soon/it-support/incident-management" },
+      { id: "troubleshooting", name: "Troubleshooting", href: "/coming-soon/it-support/troubleshooting" },
+      { id: "device-support", name: "Device Support", href: "/coming-soon/it-support/device-support" },
+      { id: "access-requests", name: "Access Requests", href: "/coming-soon/it-support/access-requests" },
+      { id: "activity", name: "Activity", href: "/coming-soon/it-support/activity" },
+    ],
+  },
+  "service-operations": {
+    id: "service-operations",
+    groupId: "it",
+    name: "Service Operations",
+    landingHref: "/solutions/it/service-operations",
+    menuItems: [
+      { id: "service-requests", name: "Service Requests", href: "/coming-soon/service-operations/service-requests" },
+      { id: "incident-tracking", name: "Incident Tracking", href: "/coming-soon/service-operations/incident-tracking" },
+      { id: "workflow-automation", name: "Workflow Automation", href: "/coming-soon/service-operations/workflow-automation" },
+      { id: "approvals", name: "Approvals", href: "/coming-soon/service-operations/approvals" },
+      { id: "service-monitoring", name: "Service Monitoring", href: "/coming-soon/service-operations/service-monitoring" },
+      { id: "activity", name: "Activity", href: "/coming-soon/service-operations/activity" },
+    ],
+  },
+  "email-automation": {
+    id: "email-automation",
+    groupId: "it",
+    name: "Email Automation",
+    landingHref: "/solutions/it/email-automation",
+    menuItems: [
+      { id: "email-classification", name: "Email Classification", href: "/coming-soon/email-automation/email-classification" },
+      { id: "email-drafting", name: "Email Drafting", href: "/coming-soon/email-automation/email-drafting" },
+      { id: "email-routing", name: "Email Routing", href: "/coming-soon/email-automation/email-routing" },
+      { id: "response-automation", name: "Response Automation", href: "/coming-soon/email-automation/response-automation" },
+      { id: "follow-ups", name: "Follow-ups", href: "/coming-soon/email-automation/follow-ups" },
+      { id: "activity", name: "Activity", href: "/coming-soon/email-automation/activity" },
+    ],
+  },
   sales: {
     id: "sales",
     groupId: "sales",
@@ -125,6 +336,12 @@ export const CHATBOT_CONTEXTS: Record<string, ChatbotContextConfig> = {
 export function getChatbotContext(contextId: string | null | undefined) {
   if (!contextId) return null;
   return CHATBOT_CONTEXTS[contextId] ?? null;
+}
+
+export function getSolutionIdForContext(contextId: string | null | undefined): SolutionId {
+  const context = getChatbotContext(contextId);
+  if (!context) return "hr";
+  return context.id === "talent-acquisition" ? "talent-acquisition" : context.groupId;
 }
 
 export function getChatbotContextFromPath(pathname: string | null | undefined) {
@@ -218,6 +435,7 @@ export const TALENT_ACQUISITION_RECENT_CHATS: RecentChat[] = [
 
 export function getContextualRecentChats(contextId: string | null | undefined): RecentChat[] {
   if (contextId === "talent-acquisition") return TALENT_ACQUISITION_RECENT_CHATS;
+  if (contextId && ["sales", "support", "it"].includes(CHATBOT_CONTEXTS[contextId]?.groupId ?? "")) return [];
   return RECENT_CHATS.filter((chat) => chat.solutionId === "hr");
 }
 

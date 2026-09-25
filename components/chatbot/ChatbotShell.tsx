@@ -6,7 +6,7 @@ import ChatHeader from "./ChatHeader";
 import ChatSidebar from "./ChatSidebar";
 import ChatWindow from "./ChatWindow";
 import ContextPanel from "./ContextPanel";
-import { createConversation, getSolution, RECENT_CHATS } from "./data";
+import { createConversation, getChatbotContext, getSolution, getSolutionIdForContext, RECENT_CHATS } from "./data";
 import { ChatMessage, SolutionId } from "./types";
 
 export default function ChatbotShell({
@@ -24,9 +24,14 @@ export default function ChatbotShell({
   const router = useRouter();
   const searchParams = useSearchParams();
   const contextParam = searchParams.get("context");
-  const initialTalentContext = contextParam === "talent-acquisition";
-  const [selectedSolution, setSelectedSolution] = useState<SolutionId>(initialTalentContext ? "talent-acquisition" : "hr");
-  const [selectedContextId, setSelectedContextId] = useState<string | null>(initialTalentContext ? "talent-acquisition" : null);
+  const requestedContext = getChatbotContext(contextParam);
+  const initialContext = requestedContext && (requestedContext.id === "talent-acquisition" || ["sales", "support", "it"].includes(requestedContext.groupId))
+    ? requestedContext
+    : null;
+  const initialContextId = initialContext?.id ?? null;
+  const initialSolutionId = getSolutionIdForContext(initialContextId);
+  const [selectedSolution, setSelectedSolution] = useState<SolutionId>(initialSolutionId);
+  const [selectedContextId, setSelectedContextId] = useState<string | null>(initialContextId);
 
   useEffect(() => {
     if (isPreview) return;
@@ -38,9 +43,9 @@ export default function ChatbotShell({
       router.replace(target, { scroll: false });
     }
   }, [selectedContextId, isPreview, router]);
-  const [selectedChat, setSelectedChat] = useState<string | null>(initialTalentContext ? null : "hr-tasks");
+  const [selectedChat, setSelectedChat] = useState<string | null>(initialContextId ? null : "hr-tasks");
   const [messages, setMessages] = useState<ChatMessage[]>(() =>
-    createConversation(getSolution(initialTalentContext ? "talent-acquisition" : "hr"))
+    createConversation(getSolution(initialSolutionId))
   );
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -90,8 +95,9 @@ export default function ChatbotShell({
     setSelectedChat(null);
     if (selectedContextId) {
       const activeContext = selectedContextId;
-      setSelectedSolution(activeContext === "talent-acquisition" ? "talent-acquisition" : "hr");
-      setMessages(createConversation(getSolution(activeContext === "talent-acquisition" ? "talent-acquisition" : "hr")));
+      const activeSolution = getSolutionIdForContext(activeContext);
+      setSelectedSolution(activeSolution);
+      setMessages(createConversation(getSolution(activeSolution)));
     } else {
       setMessages([]);
     }
