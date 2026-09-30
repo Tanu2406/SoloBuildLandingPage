@@ -5,10 +5,12 @@ import { SendIcon } from "./Icon";
 
 export default function ChatComposer({
   onSubmit,
+  onTypingChange,
   compact = false,
   light = false,
 }: {
   onSubmit: (message: string) => void;
+  onTypingChange?: (isTyping: boolean) => void;
   compact?: boolean;
   light?: boolean;
 }) {
@@ -20,6 +22,7 @@ export default function ChatComposer({
     if (!message) return;
     onSubmit(message);
     setValue("");
+    onTypingChange?.(false);
   }
 
   if (light) {
@@ -43,9 +46,13 @@ export default function ChatComposer({
         {/* Input */}
         <input
           value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Ask SoloBuildAI anything..."
-          aria-label="Ask SoloBuildAI anything"
+          placeholder="Ask Rollo AI anything..."
+          aria-label="Ask Rollo AI anything"
+          onChange={(event) => {
+            setValue(event.target.value);
+            onTypingChange?.(Boolean(event.target.value.trim()));
+          }}
+          onBlur={() => onTypingChange?.(false)}
           className="min-w-0 flex-1 bg-transparent text-[13px] text-slate-800 outline-none placeholder:text-slate-400"
         />
 
@@ -98,9 +105,13 @@ export default function ChatComposer({
       </button>
       <input
         value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Ask SoloBuildAI anything..."
-        aria-label="Ask SoloBuildAI anything"
+        placeholder="Ask Rollo AI anything..."
+        aria-label="Ask Rollo AI anything"
+        onChange={(event) => {
+          setValue(event.target.value);
+          onTypingChange?.(Boolean(event.target.value.trim()));
+        }}
+        onBlur={() => onTypingChange?.(false)}
         className="min-w-0 flex-1 bg-transparent px-2 text-[13px] text-white outline-none placeholder:text-slate-600"
       />
       <button type="button" aria-label="Add a tool" className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-white/5 hover:text-white sm:flex">

@@ -31,7 +31,7 @@ export default function ChatMessage({
 
       <div className="min-w-0 max-w-[94%]">
         <p className={`mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0066FF]`}>
-          SoloBuildAI
+          Rollo AI
         </p>
         <p className={`text-[13px] leading-relaxed ${light ? "text-slate-700" : "text-slate-300"}`}>
           {message.content}

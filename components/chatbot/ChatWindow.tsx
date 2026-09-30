@@ -9,11 +9,13 @@ export default function ChatWindow({
   messages,
   loading,
   onSubmit,
+  onUserTyping,
   light = false,
 }: {
   messages: ChatMessageData[];
   loading: boolean;
   onSubmit: (message: string) => void;
+  onUserTyping: (isTyping: boolean) => void;
   light?: boolean;
 }) {
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -28,7 +30,7 @@ export default function ChatWindow({
   return (
     <main className={`flex min-h-0 min-w-0 flex-1 flex-col ${bg}`}>
       {/* Message list */}
-      <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
+      <div className="chat-window-scroll min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
         <div className="mx-auto max-w-2xl space-y-6">
           {messages.map((message) => (
             <ChatMessage key={message.id} message={message} light={light} />
@@ -39,7 +41,7 @@ export default function ChatWindow({
                 SB
               </div>
               <span className="flex items-center gap-1.5">
-                SoloBuildAI is thinking
+                Rollo AI is thinking
                 <span className="inline-flex gap-0.5">
                   <span className="h-1 w-1 animate-bounce rounded-full bg-[#0066FF]" />
                   <span className="h-1 w-1 animate-bounce rounded-full bg-[#0066FF] [animation-delay:120ms]" />
@@ -55,7 +57,7 @@ export default function ChatWindow({
       {/* Composer */}
       <div className={`border-t ${border} ${footBg} p-4 sm:p-5`}>
         <div className="mx-auto max-w-2xl">
-          <ChatComposer onSubmit={onSubmit} light={light} />
+          <ChatComposer onSubmit={onSubmit} onTypingChange={onUserTyping} light={light} />
         </div>
       </div>
     </main>

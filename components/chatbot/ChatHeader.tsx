@@ -1,15 +1,28 @@
 import { SolutionContext } from "./types";
 import { SolutionIcon } from "./Icon";
 
+export type AssistantStatus = "idle" | "typing" | "loading" | "thinking" | "responding" | "error";
+
+const STATUS_LABELS: Record<AssistantStatus, string> = {
+  idle: "Online",
+  typing: "Typing...",
+  loading: "Loading...",
+  thinking: "Thinking...",
+  responding: "Rollo AI is typing...",
+  error: "Error",
+};
+
 export default function ChatHeader({
   solution,
   onToggleSidebar,
   onSelectContext,
+  status = "idle",
   light = false,
 }: {
   solution: SolutionContext;
   onToggleSidebar?: () => void;
   onSelectContext: (id: SolutionContext["id"]) => void;
+  status?: AssistantStatus;
   light?: boolean;
 }) {
   if (light) {
@@ -32,15 +45,15 @@ export default function ChatHeader({
             </svg>
           </div>
           <div className="min-w-0">
-            <p className="truncate text-[14px] font-semibold text-slate-900">SoloBuildAI Assistant</p>
-            <p className="truncate text-[11px] text-slate-400">Connected to your business systems</p>
+            <p className="truncate text-[14px] font-semibold text-slate-900">Rollo AI</p>
+            <p className="truncate text-[11px] text-slate-400">{solution.name}</p>
           </div>
         </div>
 
         <div className="flex shrink-0 items-center gap-3">
-          <span className="flex items-center gap-1.5 text-[11px] font-medium text-slate-500">
-            <span className="h-2 w-2 rounded-full bg-[#0066FF]" />
-            Online
+          <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[11px] font-medium text-slate-500" title={STATUS_LABELS[status]}>
+            <span className={`h-2 w-2 rounded-full ${status === "error" ? "bg-red-500" : "bg-[#0066FF]"}`} />
+            {STATUS_LABELS[status]}
           </span>
         </div>
       </header>
@@ -60,8 +73,8 @@ export default function ChatHeader({
           </svg>
         </div>
         <div className="min-w-0">
-          <p className="truncate text-[13px] font-semibold text-white">SoloBuildAI Assistant</p>
-          <p className="truncate text-[10px] text-slate-500">Connected to your business systems</p>
+          <p className="truncate text-[13px] font-semibold text-white">Rollo AI</p>
+          <p className="truncate text-[10px] text-slate-500">{solution.name}</p>
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-3">
@@ -80,8 +93,8 @@ export default function ChatHeader({
             <option value="operations" className="bg-[#0a0a0a]">Operations</option>
           </select>
         </label>
-        <span className="flex items-center gap-1.5 text-[10px] text-slate-500">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#0066FF]" /> Online
+        <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-[10px] text-slate-500" title={STATUS_LABELS[status]}>
+          <span className={`h-1.5 w-1.5 rounded-full ${status === "error" ? "bg-red-500" : "bg-[#0066FF]"}`} /> {STATUS_LABELS[status]}
         </span>
       </div>
     </header>

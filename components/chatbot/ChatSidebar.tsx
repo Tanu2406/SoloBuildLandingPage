@@ -91,11 +91,11 @@ export default function ChatSidebar({
   const bg = light ? "bg-white" : "bg-[#090909]";
   const border = light ? "border-slate-200" : "border-white/10";
   const divider = light ? "border-slate-200" : "border-white/8";
-  const labelCls = light ? "text-slate-500" : "text-slate-500";
+  const sectionHeadingCls = "flex items-center gap-2 px-2 text-[9px] font-bold uppercase tracking-[0.2em] text-[#0066FF]";
 
   const newChatCls = light
     ? "flex w-full items-center gap-2 rounded-xl bg-slate-900 px-3 py-2.5 text-left text-[12px] font-semibold text-white transition-colors hover:bg-slate-800 hover:text-white active:text-white"
-    : "flex w-full items-center gap-2 rounded-lg border border-white/12 px-3 py-2.5 text-left text-[12px] font-medium text-white transition-colors hover:border-[#0066FF]/60 hover:bg-white/[0.03]";
+    : "flex w-full items-center gap-2 rounded-lg border border-white/12 px-3 py-2.5 text-left text-[12px] font-medium text-white transition-colors hover:border-[#0066FF]/60 hover:bg-white/[0.03] hover:text-white active:text-white";
 
   const chatBtnCls = (active: boolean) => light
     ? active
@@ -104,10 +104,6 @@ export default function ChatSidebar({
     : active
       ? "bg-[#0066FF]/10 text-white ring-1 ring-inset ring-[#0066FF]/20"
       : "text-slate-400 hover:bg-white/[0.04] hover:text-white";
-
-  const scrollThumbCls = light
-    ? "[&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:hover:bg-slate-400"
-    : "[&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-thumb]:hover:bg-white/25";
 
   const toggleGroup = (groupId: string) => {
     setExpandedGroups((current) => ({
@@ -122,13 +118,14 @@ export default function ChatSidebar({
   return (
     <aside className={`flex h-full min-h-0 w-full shrink-0 flex-col border-b ${border} ${bg} lg:w-[220px] lg:border-b-0 lg:border-r`}>
       <div className={`sticky top-0 z-10 flex-shrink-0 px-4 pb-2 pt-3 ${bg}`}>
-        <Link href="/" className="inline-flex items-center justify-start bg-transparent" aria-label="Go to SoloBuildAI home" style={{ background: "transparent" }}>
+        <Link href="/" className="flex w-full items-center justify-center bg-transparent" aria-label="Go to SoloBuild home" style={{ background: "transparent" }}>
           <Image
             src="/images/solobuild-logo.png"
-            alt="SoloBuildAI"
-            width={96}
-            height={22}
-            className="block h-auto w-[96px] max-w-full object-contain align-middle bg-transparent"
+            alt="SoloBuild"
+            width={1254}
+            height={1254}
+            sizes="150px"
+            className="block h-[24px] w-[130px] max-w-full object-cover object-center align-middle bg-transparent my-[10px]"
             style={{ background: "transparent" }}
             priority
           />
@@ -146,11 +143,12 @@ export default function ChatSidebar({
         )}
       </div>
 
-      <div className={`sidebar-scroll-content flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden px-3 pb-5 ${scrollThumbCls} [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full`} style={{ scrollbarWidth: "thin" }}>
-        <div className="pt-0">
-              <div className="mb-2 px-2">
-            <p className={`text-[9px] font-semibold uppercase tracking-[0.2em] ${labelCls}`}>
-              Solutions
+      <div className="sidebar-scroll-content flex min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden px-3 pb-5">
+        <div className="contents">
+          <div className="order-3 mb-2 px-2">
+            <p className={sectionHeadingCls}>
+              <span>Solutions</span>
+              <span className="h-px flex-1 bg-[#0066FF]/35" aria-hidden="true" />
             </p>
             {showContextualView && onResetContext && (
               <button
@@ -167,13 +165,11 @@ export default function ChatSidebar({
             )}
           </div>
 
-          <div className="space-y-1.5">
+          <div className="order-3 space-y-1.5">
             {showContextualView && contextualSelection ? (
               <div className="rounded-lg">
                 <div className="space-y-1 pt-1 pl-0">
-                  <div className={`block rounded-md px-2.5 py-1.5 text-[12px] leading-5 ${
-                    light ? "text-slate-700" : "text-slate-200"
-                  }`}>
+                  <div className="block rounded-md border border-[#0066FF]/20 bg-[#0066FF]/10 px-2.5 py-1.5 text-[12px] font-medium leading-5 text-[#0066FF]">
                     {contextualSelection.id === "talent-acquisition"
                       ? "HR Solutions / Talent Acquisition"
                       : `${contextualSelection.groupId === "hr" ? "HR Solutions" : contextualSelection.groupId === "sales" ? "Sales" : contextualSelection.groupId === "support" ? "Customer Support" : contextualSelection.groupId === "it" ? "IT Solutions" : contextualSelection.name} / ${contextualSelection.name}`}
@@ -301,15 +297,18 @@ export default function ChatSidebar({
           </div>
         </div>
 
-        <div className="mt-5 px-1">
-          <button onClick={onNewChat} className={newChatCls}>
-            <span className="text-base leading-none text-white hover:text-white active:text-white">+</span>
+        <div className="order-1 mt-2 px-1">
+          <button onClick={onNewChat} className={`${newChatCls} new-chat-button`}>
+            <span className="new-chat-icon text-base leading-none text-white hover:text-white active:text-white">+</span>
             New Chat
           </button>
         </div>
 
-        <div className="mt-5">
-          <p className={`px-2 text-[9px] font-semibold uppercase tracking-[0.2em] ${labelCls}`}>Recent Chats</p>
+        <div className="order-2 mt-5">
+          <p className={sectionHeadingCls}>
+            <span>Recent Chats</span>
+            <span className="h-px flex-1 bg-[#0066FF]/35" aria-hidden="true" />
+          </p>
           <div className="mt-2 space-y-0.5">
             {(showContextualView ? contextualRecentChats : RECENT_CHATS).map((chat) => (
               <button

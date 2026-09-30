@@ -65,17 +65,21 @@ body {
 }
 
 .brand-logo-wordmark { display: none; }
+.brand-logo-chatbot-image { display: none; }
 [data-theme="light"] .brand-logo-image { display: none; }
 [data-theme="light"] .brand-logo-wordmark {
-  display: inline-flex;
+  display: none;
   align-items: flex-start;
   color: #111111;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
+  padding-top: 4px;
+  padding-bottom: 4px;
   white-space: nowrap;
 }
+[data-theme="light"] .brand-logo-chatbot-image { display: block; }
 [data-theme="light"] .brand-logo-wordmark sup {
   margin-left: 1px;
   color: #0066FF;
@@ -88,6 +92,38 @@ body {
 ::-webkit-scrollbar-track { background: #000000; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #0066FF; }
+
+.sidebar-scroll-content {
+  scrollbar-width: thin;
+  scrollbar-color: #b5b5b5 transparent;
+}
+.sidebar-scroll-content::-webkit-scrollbar { width: 5px; }
+.sidebar-scroll-content::-webkit-scrollbar-track {
+  background: transparent;
+  border: none;
+}
+.sidebar-scroll-content::-webkit-scrollbar-thumb {
+  background: #b5b5b5;
+  border: none;
+  border-radius: 9999px;
+}
+.sidebar-scroll-content::-webkit-scrollbar-thumb:hover { background: #999999; }
+
+.chat-window-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #b5b5b5 transparent;
+}
+.chat-window-scroll::-webkit-scrollbar { width: 5px; }
+.chat-window-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  border: none;
+}
+.chat-window-scroll::-webkit-scrollbar-thumb {
+  background: #b5b5b5;
+  border: none;
+  border-radius: 9999px;
+}
+.chat-window-scroll::-webkit-scrollbar-thumb:hover { background: #999999; }
 
 /* ── Scroll-reveal animations ──────────────────────────────────────────── */
 .reveal {
@@ -424,5 +460,17 @@ body {
 [data-theme="light"] main .bg-black\/40 *,
 [data-theme="light"] main .bg-black\/65 *,
 [data-theme="light"] main .bg-black\/70 * {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .new-chat-button,
+[data-theme="light"] .new-chat-button:hover,
+[data-theme="light"] .new-chat-button:active {
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .new-chat-button .new-chat-icon,
+[data-theme="light"] .new-chat-button:hover .new-chat-icon,
+[data-theme="light"] .new-chat-button:active .new-chat-icon {
   color: #ffffff !important;
 }

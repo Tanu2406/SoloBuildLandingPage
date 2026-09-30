@@ -48,6 +48,7 @@ export default function ChatbotShell({
     createConversation(getSolution(initialSolutionId))
   );
   const [loading, setLoading] = useState(false);
+  const [isUserTyping, setIsUserTyping] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const solution = getSolution(selectedSolution);
@@ -110,6 +111,7 @@ export default function ChatbotShell({
       ...current,
       { id: `${Date.now()}-user`, role: "user", content },
     ]);
+    setIsUserTyping(false);
     setLoading(true);
     window.setTimeout(() => {
       setLoading(false);
@@ -180,6 +182,7 @@ export default function ChatbotShell({
           solution={solution}
           onToggleSidebar={() => setSidebarOpen(true)}
           onSelectContext={selectSolution}
+          status={isUserTyping ? "typing" : loading ? "loading" : "idle"}
           light={light}
         />
         <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
@@ -187,6 +190,7 @@ export default function ChatbotShell({
             messages={messages}
             loading={loading}
             onSubmit={submitMessage}
+            onUserTyping={setIsUserTyping}
             light={light}
           />
           <ContextPanel

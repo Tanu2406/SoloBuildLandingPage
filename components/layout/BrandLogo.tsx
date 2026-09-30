@@ -5,7 +5,9 @@ export default function BrandLogo({ compact = false }: { compact?: boolean }) {
   return (
     <span className={`brand-logo relative flex items-center flex-shrink-0 ${compact ? "h-9 w-[100px]" : "h-9 w-[132px]"}`}>
       <Image src={logoImage} alt="SoloBuild" fill sizes={compact ? "100px" : "132px"} className="brand-logo-image object-cover" priority />
+      <Image src="/images/solobuild-logo.png" alt="SoloBuild" fill sizes={compact ? "100px" : "132px"} className="brand-logo-chatbot-image object-cover" priority />
       <span className="brand-logo-wordmark" aria-hidden="true"><span>SoloBuild</span><sup>+</sup></span>
     </span>
   );
+  
 }

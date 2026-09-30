@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Navbar from "@/components/layout/Navbar";
 import ChatbotShell from "@/components/chatbot/ChatbotShell";
 
-export const metadata = { title: "SoloBuildAI Assistant" };
+export const metadata = { title: "Rollo AI" };
 
 export default function AssistantPage() {
   return (
