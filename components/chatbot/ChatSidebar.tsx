@@ -94,7 +94,7 @@ export default function ChatSidebar({
   const labelCls = light ? "text-slate-500" : "text-slate-500";
 
   const newChatCls = light
-    ? "flex w-full items-center gap-2 rounded-xl bg-slate-900 px-3 py-2.5 text-left text-[12px] font-semibold text-white transition-colors hover:bg-slate-800"
+    ? "flex w-full items-center gap-2 rounded-xl bg-slate-900 px-3 py-2.5 text-left text-[12px] font-semibold text-white transition-colors hover:bg-slate-800 hover:text-white active:text-white"
     : "flex w-full items-center gap-2 rounded-lg border border-white/12 px-3 py-2.5 text-left text-[12px] font-medium text-white transition-colors hover:border-[#0066FF]/60 hover:bg-white/[0.03]";
 
   const chatBtnCls = (active: boolean) => light
@@ -303,7 +303,7 @@ export default function ChatSidebar({
 
         <div className="mt-5 px-1">
           <button onClick={onNewChat} className={newChatCls}>
-            <span className="text-base leading-none text-[#0066FF]">+</span>
+            <span className="text-base leading-none text-white hover:text-white active:text-white">+</span>
             New Chat
           </button>
         </div>
